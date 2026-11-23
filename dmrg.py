@@ -141,7 +141,8 @@ def MPS_MPO_energies(bond_dim, pairingStrength):
 	eigenfuncs, _, _, _ = diagonalize(pairingStrength)
 	for i, g in enumerate(pairingStrength):
 		psi_trunc, _ = truncate(eigenfuncs[:, 0, i], bond_dim)
-		full = np.zeros(16); full[idx] = psi_trunc
+		full = np.zeros(16)
+		full[idx] = psi_trunc
 		E.append(contract(MPS(full), g))
 	return E
 

@@ -370,3 +370,29 @@ plt.savefig('figures/energy_all_methods.pdf', bbox_inches='tight')
 plt.show()
 
 
+"""
+PERCENTAGE RECOVERY OF CORRELATION ENERGIES
+"""
+def print_table_all_methods_percentage(g_values=[-1, -0.5, 0.5, 1]):
+    # print recovered correlation energy E - E_ref percentage, for all methods at selected g
+    methods = {
+        "CID":       E_CID,
+        "chi=2":     E_X2,
+        "chi=1":     E_X1,
+        "HF":        E_HF,
+        "RSPT2":     E_second_SD,
+        "RSPT3":     E_third_SD,
+        "RSPT2, HF": E_second_HF,
+        "RSPT3, HF": E_third_HF,
+    }
+    print("All methods, E_corr %")
+    for x in g_values:
+        i = np.argmin(np.abs(g - x))  # index of the g value closest to x
+        FCI_corr = E_FCI[i] - E_ref[i]
+        print(f"g = {g[i]:.2f}")
+        for name, E in methods.items():
+            print(f"  E_corr % {name:<9} = {(E[i] - E_ref[i]) / FCI_corr * 100.0 : .4f}")
+
+print_table_all_methods_percentage()
+
+
